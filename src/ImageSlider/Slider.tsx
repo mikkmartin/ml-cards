@@ -65,5 +65,8 @@ const Slider = styled(motion.div)`
     rect {
       fill: #fdc900;
     }
+    text {
+      pointer-events: none;
+    }
   }
 `
