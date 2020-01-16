@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ImageSlider from './ImageSlider'
 import Notes from './Notes'
 import LineChart from './LineChart'
@@ -7,11 +7,16 @@ import styled from 'styled-components'
 
 export default function App() {
   const progress = useMotionValue(0)
+  const [selected, setSelected] = useState(0)
+
   return (
     <Layout>
-      <LineChart />
-      <Notes />
+      {[...Array(7)].map((d, i) => (
+        <span onMouseEnter={() => setSelected(i)}>{i} </span>
+      ))}
+      <LineChart progress={progress} selected={selected} />
       <ImageSlider progress={progress} />
+      <Notes />
     </Layout>
   )
 }
