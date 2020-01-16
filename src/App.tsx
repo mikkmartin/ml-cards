@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ImageSlider from './ImageSlider'
 import Notes from './Notes'
 import LineChart from './LineChart'
+import Inputs from './Inputs'
 import { useMotionValue } from 'framer-motion'
 import styled from 'styled-components'
 
@@ -11,9 +12,7 @@ export default function App() {
 
   return (
     <Layout>
-      {[...Array(7)].map((d, i) => (
-        <span onMouseEnter={() => setSelected(i)}>{i} </span>
-      ))}
+      <Inputs selected={selected} setSelected={setSelected} />
       <LineChart progress={progress} selected={selected} />
       <ImageSlider progress={progress} />
       <Notes />
