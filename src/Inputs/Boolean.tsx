@@ -37,9 +37,9 @@ const StyledCheckbox = styled(motion.div)`
   }
 `
 
-export default function({ className, checked, ...props }) {
+export default function({ checked, ...props }) {
   return (
-    <CheckboxContainer className={className}>
+    <CheckboxContainer>
       <label>
         <HiddenCheckbox checked={checked} {...props} />
         <StyledCheckbox checked={checked}>
