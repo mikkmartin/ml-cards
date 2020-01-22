@@ -1,17 +1,15 @@
 import React from 'react'
 import Input from './Input'
-import List from './List'
 import styled from 'styled-components'
 
-export default function({ selected, setSelected }) {
+export default function({ onRun }) {
   return (
     <Container>
       <Input name="noiseStrench" type="float" />
       <Input name="grothSpeed" type="int" />
       <Input name="maxSize" type="int" />
       <Input name="rmsprop" type="bool" />
-      <button>Rerun</button>
-      <List selected={selected} setSelected={setSelected} />
+      <button onClick={() => onRun()}>Rerun</button>
     </Container>
   )
 }
