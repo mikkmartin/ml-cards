@@ -1,6 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+
+export default function({ onChange }) {
+  const [checked, setChecked] = useState(true)
+  return (
+    <CheckboxContainer>
+      <label>
+        <HiddenCheckbox
+          checked={checked}
+          onChange={() => {
+            onChange(!checked)
+            setChecked(!checked)
+          }}
+        />
+        <StyledCheckbox checked={checked}>
+          <Icon viewBox="-2 -2 27 27">
+            <polyline points="20 6 9 17 4 12" />
+          </Icon>
+        </StyledCheckbox>
+      </label>
+    </CheckboxContainer>
+  )
+}
 
 const CheckboxContainer = styled.div`
   display: inline-block;
@@ -36,18 +58,3 @@ const StyledCheckbox = styled(motion.div)`
     visibility: ${props => (props.checked ? 'visible' : 'hidden')};
   }
 `
-
-export default function({ checked, ...props }) {
-  return (
-    <CheckboxContainer>
-      <label>
-        <HiddenCheckbox checked={checked} {...props} />
-        <StyledCheckbox checked={checked}>
-          <Icon viewBox="-2 -2 27 27">
-            <polyline points="20 6 9 17 4 12" />
-          </Icon>
-        </StyledCheckbox>
-      </label>
-    </CheckboxContainer>
-  )
-}

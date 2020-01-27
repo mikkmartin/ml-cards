@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Boolean from './Boolean'
 import Slider from '../common/Slider'
 
-export default function({ name, type, onChange = () => {} }) {
-  const [checked, setChecked] = useState(true)
-
+export default function({ name, type, onChange = _ => {} }) {
   function typeString(type) {
     switch (type) {
       case 'float':
@@ -19,21 +17,27 @@ export default function({ name, type, onChange = () => {} }) {
     }
   }
 
+  function formatChange(val) {
+    const obj = {}
+    obj[name] = val
+    onChange(obj)
+  }
+
   function inputType(type) {
     switch (type) {
       case 'float':
-        return <Slider min={0} max={1} value={0.95} />
+        return <Slider min={0} max={1} value={0.95} step={0.01} onChange={formatChange} />
       case 'int':
-        return <Slider min={0} max={5} value={3} />
+        return <Slider min={1} max={5} value={3} step={1} onChange={formatChange} />
       case 'bool':
-        return <Boolean checked={checked} onChange={() => setChecked(!checked)} />
+        return <Boolean onChange={formatChange} />
       default:
         return <div>✓</div>
     }
   }
 
   return (
-    <Container onClick={() => onChange()}>
+    <Container>
       <div>
         {name}
         <span> {typeString(type)}</span>

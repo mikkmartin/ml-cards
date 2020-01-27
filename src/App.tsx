@@ -6,28 +6,33 @@ import LineChart from './LineChart'
 import Inputs from './Inputs'
 import { useMotionValue } from 'framer-motion'
 import styled from 'styled-components'
+import Slider from './common/Slider'
 
 export default function App() {
   const [items, next, selected, setSelected] = useItems(6)
   const progress = useMotionValue(0)
 
   return (
-    <Layout>
+    <Layout width="375" height="375" viewBox="0 0 375 375">
+      <Slider y="0" />
+      <Slider y="36" min={0} max={1} step={0.1} x="175" width={200} />
+      <Slider y="72" min={0} max={1} step={0.01} />
+      <Slider y="108" min={0} max={1} step={0.01} />
+      {/*
       <Inputs onRun={next} />
       <List selected={selected} setSelected={setSelected} items={items} />
       <LineChart progress={progress} selected={selected} />
       <ImageSlider progress={progress} />
-      {/*
       <Notes />
       */}
     </Layout>
   )
 }
 
-const Layout = styled.div`
-  > div {
-    margin-bottom: 0.5rem;
-  }
+const Layout = styled.svg`
+  width: 100%;
+  height: 100%;
+  background: #f2f2f4;
 `
 
 const useItems = initialAmount => {
@@ -53,13 +58,18 @@ const useItems = initialAmount => {
   )
   return [
     items,
-    (item = defaultObject) => {
+    (item = {}) => {
       setItems(oldItems => {
         setCount(count + 1)
         setSelected(count)
         const newItems = [...oldItems]
         newItems.shift()
-        newItems.push({ ...item, id: count })
+        newItems.push({
+          id: count,
+          attrs: { ...defaultObject.attrs, ...item },
+          ...defaultObject,
+          ...item
+        })
         return newItems
       })
     },
