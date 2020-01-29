@@ -13,31 +13,27 @@ export default function({ label = 'Accuracy', progress = useMotionValue(0), sele
 
   return (
     <Context.Provider value={{ label, ref, data: generateData(122 * 2), progress }}>
-      <Container>
-        <svg ref={ref} width="100%" height="100%">
-          {datasets.map((dataset, i) => (
-            <Line key={i} selected={i === selected} data={dataset} />
-          ))}
-          <Label />
-          <Axis />
-        </svg>
-      </Container>
+      <Svg ref={ref} width="100%" height="100%" viewBox="0 0 375 165">
+        {datasets.map((dataset, i) => (
+          <Line key={i} selected={i === selected} data={dataset} />
+        ))}
+        <Label />
+        <Axis />
+      </Svg>
     </Context.Provider>
   )
 }
 
-const Container = styled.div`
-  width: 375px;
-  height: 165px;
-  background: #3e3e3e;
-  color: white;
+const Svg = styled.svg`
+  background: white;
+  margin-bottom: 0.15rem;
   g {
     path {
       fill: none;
       stroke-width: 2;
       &.smooth {
-        stroke: white;
-        opacity: 0.1;
+        stroke: black;
+        opacity: 0.05;
       }
       &.detailed {
         opacity: 0;

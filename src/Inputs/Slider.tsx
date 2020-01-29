@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, transform } from 'framer-motion'
 import styled from 'styled-components'
 import clamp from 'lodash/clamp'
@@ -11,16 +11,23 @@ export default function({
   height = 32,
   value: initialValue = round(max / 2, step),
   onChange = v => v,
+  showLabel = true,
+  children = undefined,
   ...rest
 }) {
   const transition = { type: 'spring', stiffness: 500, damping: 30, mass: 0.1 }
   const [value, setValue] = useState(initialValue)
+  const previousValue = useRef(value)
   const [lastValue, setLastValue] = useState(initialValue)
   const [totalDragMovement, setTotalDragMovement] = useState(0)
   const [focus, setFocus] = useState(false)
   const [startPos, setStartPos] = useState(0)
   const ref = useRef(null)
   const inputWidth = useRef(null)
+
+  useEffect(() => {
+    setValue(initialValue)
+  }, [initialValue])
 
   useEffect(() => {
     if (ref.current) {
@@ -41,6 +48,10 @@ export default function({
     const clamped = clamp(lastValue + valueMoved, min, max)
     const rounded = round(clamped, step)
     setValue(rounded)
+    if (previousValue.current !== value) {
+      previousValue.current = value
+      onChange(rounded)
+    }
   }
 
   function onTap() {
@@ -89,8 +100,10 @@ export default function({
           step={step}
           value={value}
           setValue={setValue}
+          showLabel={showLabel}
         />
       </foreignObject>
+      {children}
     </Slider>
   )
 }
@@ -103,13 +116,18 @@ const Slider = styled(motion.svg)`
     fill: black;
     pointer-events: none;
   }
+  &:hover {
+    rect:nth-child(2) {
+      opacity: 0.2;
+    }
+  }
 `
 
-function InputText({ focus, setFocus, value, setValue, ...rest }) {
+function InputText({ focus, setFocus, value, setValue, showLabel, ...rest }) {
   const ref = useRef(null)
 
   useEffect(() => {
-    if (focus) ref.current.focus()
+    if (focus && showLabel) ref.current.focus()
     ref.current.onblur = () => {
       setFocus(false)
     }
@@ -120,6 +138,7 @@ function InputText({ focus, setFocus, value, setValue, ...rest }) {
       type="number"
       ref={ref}
       value={value}
+      showLabel={showLabel}
       {...rest}
       onChange={ev => {
         const val = parseFloat(ev.target.value) || 0
@@ -129,13 +148,13 @@ function InputText({ focus, setFocus, value, setValue, ...rest }) {
   )
 }
 
-const StyledInput = styled.input`
-  font-family: 'SFMono-Regular', 'SF Mono';
+const StyledInput = styled.input<any>`
   position: absolute;
   width: 100%;
   height: 100%;
   font-size: 16px;
   letter-spacing: 0.06;
+  color: ${props => (props.showLabel ? 'initial' : 'transparent')};
   top: 0;
   left: 0;
   padding: 0 8px;

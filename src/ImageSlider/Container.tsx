@@ -28,13 +28,14 @@ export default function({ progress = useMotionValue(0) }) {
 }
 
 const Container = styled(motion.div)`
-  width: 375px;
+  width: 100%;
+  height: auto;
   position: relative;
-  background: #3e3e3e;
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  video {
+  svg {
     width: 100%;
     height: auto;
   }

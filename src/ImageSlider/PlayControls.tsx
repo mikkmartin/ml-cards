@@ -49,6 +49,6 @@ const Container = styled(motion.div)`
   overflow: hidden;
   svg {
     width: 100%;
-    height: 371px;
+    height: auto;
   }
 `

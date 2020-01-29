@@ -10,13 +10,13 @@ export default function() {
 
   useEffect(() => {
     const vid = ref.current
-    function funktsioon() {
+    function update() {
       if (vid.currentTime === vid.duration) {
         setTimeout(() => setIsPlaying(false), 1)
       }
     }
-    vid.addEventListener('timeupdate', funktsioon)
-    return () => vid.removeEventListener('timeupdate', funktsioon)
+    vid.addEventListener('timeupdate', update)
+    return () => vid.removeEventListener('timeupdate', update)
   }, [isPlaying, setIsPlaying])
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function() {
     function animate() {
       if (ref.current) {
         const normalized = transform(ref.current.currentTime, [0, ref.current.duration], [0, 1])
-        pos.set(normalized)
+        if (!isNaN(normalized)) pos.set(normalized)
         interval = requestAnimationFrame(animate)
       }
     }
@@ -49,7 +49,7 @@ export default function() {
   }, [temporarylyPaused, pos])
 
   return (
-    <video ref={ref} width="320" height="240">
+    <video ref={ref} width="100%" height="100%">
       <source src="ml-recording.mov" type="video/mp4" />
     </video>
   )

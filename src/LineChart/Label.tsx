@@ -36,7 +36,7 @@ export default function() {
 }
 
 const Group = styled.g`
-  fill: white;
+  fill: black;
   font-family: SF Mono, monospace;
   text {
     font-weight: 200;

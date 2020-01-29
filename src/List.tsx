@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function({ selected, setSelected, items }) {
+  const height = items.length * 32
   function classNames(selected, id) {
     return [selected === id ? 'selected' : '', id % 2 ? 'odd' : ''].join(' ')
   }
 
   return (
-    <List width="100%" height={items.length * 32 + 'px'}>
+    <List width="375" height={height} viewBox={`0 0 375 ${height}`}>
       <AnimatePresence initial={false}>
         {[...items].reverse().map(({ id, attrs: { noiseStrength, growthSpeed, maxSize, rmsprop } }, i) => (
           <motion.g
@@ -35,6 +36,8 @@ export default function({ selected, setSelected, items }) {
 }
 
 const List = styled.svg`
+  width: 100%;
+  height: auto;
   g {
     rect {
       fill: #00000000;
