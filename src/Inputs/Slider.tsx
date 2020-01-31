@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, transform } from 'framer-motion'
 import styled from 'styled-components'
 import clamp from 'lodash/clamp'
@@ -13,6 +13,10 @@ export default function({
   onChange = v => v,
   showLabel = true,
   children = undefined,
+  onTap = (ev, info) => {},
+  onTapStart = (ev, info) => {},
+  onDragEnd = (ev, info) => {},
+  onTapCancel = (ev, info) => {},
   ...rest
 }) {
   const transition = { type: 'spring', stiffness: 500, damping: 30, mass: 0.1 }
@@ -35,12 +39,13 @@ export default function({
     }
   }, [ref, inputWidth])
 
-  function onTapStart(ev) {
+  function handleOnTapStart(ev, info) {
     setTotalDragMovement(0)
     setStartPos(ev.clientX || ev.touches[0].clientX)
+    onTapStart(ev, info)
   }
 
-  function onDrag(ev) {
+  function handleOnDrag(ev, info) {
     const mouseX = ev.clientX || ev.touches[0].clientX
     const movementX = mouseX - startPos
     setTotalDragMovement(movementX)
@@ -54,12 +59,14 @@ export default function({
     }
   }
 
-  function onTap() {
+  function handleOnTap(ev, info) {
     if (Math.abs(totalDragMovement) < 2) setFocus(true)
+    onTap(ev, info)
   }
 
-  function onDragEnd() {
+  function handleOnDragEnd(ev, info) {
     setLastValue(value)
+    onDragEnd(ev, info)
   }
 
   return (
@@ -68,10 +75,11 @@ export default function({
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       drag="x"
-      onTapStart={onTapStart}
-      onDrag={onDrag}
-      onTap={onTap}
-      onDragEnd={onDragEnd}
+      onTapStart={handleOnTapStart}
+      onDrag={handleOnDrag}
+      onTap={handleOnTap}
+      onTapCancel={onTapCancel}
+      onDragEnd={handleOnDragEnd}
       dragElastic={0}
       dragConstraints={{ left: 0, right: 0 }}
       ref={ref}

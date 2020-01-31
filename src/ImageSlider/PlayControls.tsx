@@ -6,30 +6,36 @@ import { Context } from './index'
 export default function() {
   const { isPlaying, setIsPlaying } = useContext(Context)
   return (
-    <Container
+    <Svg
+      width="400"
+      height="400"
+      viewBox="0 0 400 400"
       initial="default"
       animate={isPlaying ? 'pause' : 'play'}
       whileHover="hovered"
       whileTap="tapped"
       onClick={() => setIsPlaying(!isPlaying)}
-      variants={{
-        default: { background: 'rgba(0,0,0,0)' },
-        hovered: { background: 'rgba(0,0,0,0.15)' }
-      }}
       transition={transition}>
-      <motion.svg width="400" height="400" viewBox="0 0 400 400">
-        <motion.path
-          fill="#FFF"
-          fill-rule="nonzero"
-          d={isPlaying ? 'M178 173h16v55h-16zM207 173h16v55h-16z' : 'M181 173l45 27.5-45 27.5z'}
-          variants={{
-            default: { scale: 0.8, fill: 'rgba(255,255,255,0)' },
-            hovered: { scale: 1.2, fill: 'rgba(255,255,255,1)' },
-            tapped: { scale: 1 }
-          }}
-        />
-      </motion.svg>
-    </Container>
+      <motion.rect
+        width="100%"
+        height="100%"
+        fill="rgba(0,0,0,0.15)"
+        variants={{
+          default: { opacity: 0 },
+          hovered: { opacity: 1 }
+        }}
+      />
+      <motion.path
+        fill="#FFF"
+        fill-rule="nonzero"
+        d={isPlaying ? 'M178 173h16v55h-16zM207 173h16v55h-16z' : 'M181 173l45 27.5-45 27.5z'}
+        variants={{
+          default: { scale: 0.8, fill: 'rgba(255,255,255,0)' },
+          hovered: { scale: 1.2, fill: 'rgba(255,255,255,1)' },
+          tapped: { scale: 1 }
+        }}
+      />
+    </Svg>
   )
 }
 
@@ -40,7 +46,7 @@ const transition = {
   mass: 0.5
 }
 
-const Container = styled(motion.div)`
+const Svg = styled(motion.svg)`
   cursor: pointer;
   z-index: 2;
   position: absolute;
