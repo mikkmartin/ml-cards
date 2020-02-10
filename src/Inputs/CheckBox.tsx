@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
-export default function({ x, y }) {
+export default function({ x, y, onChange }) {
   const [checked, setChecked] = useState(true)
   return (
     <CheckboxContainer>
@@ -11,7 +11,7 @@ export default function({ x, y }) {
           <HiddenCheckbox
             checked={checked}
             onChange={() => {
-              //onChange(!checked)
+              onChange(!checked)
               setChecked(!checked)
             }}
           />

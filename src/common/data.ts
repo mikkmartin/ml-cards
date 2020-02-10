@@ -6,7 +6,7 @@ function rnd(min, max) {
   return Math.random() * (max - min) + min
 }
 
-export default function(amount) {
+export default function(amount, attrs) {
   const simplex = new SimplexNoise(),
     detailed = [],
     smooth = [],

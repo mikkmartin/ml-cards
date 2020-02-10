@@ -4,19 +4,20 @@ import styled from 'styled-components'
 import Label from './Label'
 import Axis from './Axis'
 import Line from './Line'
-import generateData from './data'
 
-const datasets = [...Array(7)].map(i => generateData(122 * 4))
 export const Context = createContext(null)
-export default function({ label = 'Accuracy', progress = useMotionValue(0), selected }) {
+export default function({ label = 'Accuracy', progress = useMotionValue(0), selected, items }) {
   const ref = useRef(null)
+  const nth = selected % items.length
 
   return (
-    <Context.Provider value={{ label, ref, data: generateData(122 * 2), progress }}>
+    <Context.Provider value={{ label, ref, data: items[nth].data, progress }}>
       <Svg ref={ref} width="100%" height="100%" viewBox="0 0 375 165">
-        {datasets.map((dataset, i) => (
-          <Line key={i} selected={i === selected} data={dataset} />
-        ))}
+        {items
+          .map(item => item.data)
+          .map((dataset, i) => (
+            <Line key={i} selected={i === nth} data={dataset} />
+          ))}
         <Label />
         <Axis />
       </Svg>
