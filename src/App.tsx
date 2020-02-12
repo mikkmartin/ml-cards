@@ -16,7 +16,7 @@ const attrs = {
 }
 
 export default function App() {
-  const [items, next, selected, setSelected] = useItems(6)
+  const [items, next, selected, setSelected] = useItems(7)
   const progress = useMotionValue(0)
 
   return (
@@ -51,15 +51,31 @@ const Layout = styled.div`
 `
 
 const useItems = initialAmount => {
+  const generateHash = () =>
+    Math.round(Math.random() * 10000000000)
+      .toString(36)
+      .padEnd(7, '0')
+  const startTime = isFirst => {
+    const currentTime = new Date().getTime()
+    const delay = isFirst ? 0 : -1000000000
+    return currentTime + delay
+  }
   const [count, setCount] = useState(initialAmount)
   const [selected, setSelected] = useState(initialAmount - 1)
   const defaultObject = () => ({
-    attrs,
+    attrs: {
+      rmsprop: Math.random() > 0.5,
+      noiseStrength: Math.floor(Math.random() * 100) / 100,
+      growthSpeed: Math.floor(Math.random() * 10),
+      maxSize: Math.floor(Math.random() * 1000)
+    },
     data: generateData(122 * 5, attrs)
   })
   const [items, setItems] = useState(
     [...Array(initialAmount)].map((_, id) => ({
       ...defaultObject(),
+      start: startTime(id === initialAmount - 1),
+      name: generateHash(),
       id
     }))
   )
@@ -72,6 +88,8 @@ const useItems = initialAmount => {
         const newItems = [...oldItems]
         newItems.shift()
         newItems.push({
+          name: generateHash(),
+          start: new Date().getTime(),
           id: count,
           attrs,
           data: generateData(122 * 5, attrs)

@@ -12,7 +12,7 @@ export default function({ label = 'Accuracy', progress = useMotionValue(0), sele
 
   return (
     <Context.Provider value={{ label, ref, data: items[nth].data, progress }}>
-      <Svg ref={ref} width="100%" height="100%" viewBox="0 0 375 165">
+      <Svg ref={ref} width="100%" height="100%" viewBox="0 0 375 175">
         {items
           .map(item => item.data)
           .map((dataset, i) => (
@@ -48,4 +48,20 @@ const Svg = styled.svg`
       }
     }
   }
+  .domain {
+    display: none;
+  }
+  .tick {
+    opacity: 0.25;
+    text {
+      font-size: 9px;
+      letter-spacing: 0.5px;
+    }
+  }
+  .lines .tick {
+    fill: black;
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+  font-weight: 500;
 `

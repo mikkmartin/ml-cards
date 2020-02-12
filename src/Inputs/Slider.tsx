@@ -139,7 +139,7 @@ function InputText({ focus, setFocus, value, setValue, showLabel, ...rest }) {
     ref.current.onblur = () => {
       setFocus(false)
     }
-  }, [ref, focus, setFocus])
+  }, [ref, focus, setFocus, showLabel])
 
   return (
     <StyledInput

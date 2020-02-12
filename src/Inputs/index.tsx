@@ -43,7 +43,7 @@ export default function({ onRun, initialItems }) {
   }
 
   return (
-    <Container width="375" height={height} viewBox={`0 0 375 ${height}`}>
+    <Container width="375" height="187" viewBox={`0 0 375 187`}>
       {useMemo(
         () =>
           Object.keys(items).map((name, i) => {
@@ -69,10 +69,10 @@ export default function({ onRun, initialItems }) {
           }),
         [initialItems]
       )}
-      <motion.g className="button" onTap={() => onRun(state)} transition={transition} style={{ y: height - 48 }}>
+      <motion.g className="button" onTap={() => onRun(state)} transition={transition} style={{ y: height - 64 }}>
         <rect x="0" y="0" width="100%" height="48" />
         <text x="50%" y="28" textAnchor="middle">
-          Rerun
+          New run
         </text>
       </motion.g>
     </Container>
