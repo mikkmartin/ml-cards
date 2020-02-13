@@ -7,7 +7,7 @@ import PlayControls from './PlayControls'
 
 export const Context = createContext(null)
 export default forwardRef(({ progress = useMotionValue(0) }: { progress: MotionValue }, item: Ref) => {
-  const [isPlaying, setIsPlaying] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
   const [temporarylyPaused, setTemporarylyPaused] = useState(false)
   const ref = useRef(null)
 

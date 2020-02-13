@@ -10,7 +10,7 @@ export default function() {
         </tspan>
       </text>
       <text
-        fontFamily="HelveticaNeue-Medium, Helvetica Neue"
+        fontFamily='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
         fontSize="11"
         fontWeight="400"
         letterSpacing=".75"

@@ -4,7 +4,7 @@ import { Context } from './Container'
 import { transform } from 'framer-motion'
 
 export default function() {
-  const [currentValue, setCurrentValue] = useState(null)
+  const [currentValue, setCurrentValue] = useState(0.0)
   const { label, data, progress } = useContext(Context)
   const getIteration = val => Math.floor(transform(val, [0, 1], [0, data.detailed.length - 1]))
 
@@ -28,7 +28,7 @@ export default function() {
       </text>
       <text fontSize="30" letterSpacing="-1.36" textAnchor="end">
         <tspan x="96%" y="134">
-          {currentValue}
+          {currentValue.toFixed(2)}
         </tspan>
       </text>
     </Group>

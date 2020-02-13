@@ -18,6 +18,7 @@ export default function() {
       .attr('class', 'lines')
       .attr('transform', `translate(0, ${h - 15})`)
     xAxisLines = svg.append('g').attr('transform', `translate(0, ${h - 15})`)
+    updateProgress(0)
   }, [ref])
 
   function updateProgress(val) {

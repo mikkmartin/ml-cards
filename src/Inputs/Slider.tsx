@@ -158,9 +158,7 @@ function InputText({ focus, setFocus, value, setValue, showLabel, ...rest }) {
 }
 
 const StyledInput = styled.input<any>`
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  margin-top: 6px;
   font-size: 16px;
   letter-spacing: 0.06;
   color: ${props => (props.showLabel ? 'initial' : 'transparent')};

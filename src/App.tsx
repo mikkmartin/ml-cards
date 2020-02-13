@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef } from 'react'
+import React, { useState, useRef, createRef, useEffect } from 'react'
 import ImageSlider from './ImageSlider'
 import Notes from './Notes'
 import List from './List'
@@ -16,10 +16,22 @@ const attrs = {
   rmsprop: true
 }
 
-export default function App() {
+interface ControlObject {
+  current: { play: Function }
+}
+
+export default function App(controls: ControlObject = createRef()) {
   const [items, next, selected, setSelected] = useItems(7)
   const progress = useMotionValue(0)
   const ref = useRef(null)
+
+  useEffect(() => {
+    controls.current = {
+      play() {
+        ref.current()
+      }
+    }
+  }, [controls])
 
   const onRun = d => {
     next(d)
@@ -49,7 +61,7 @@ export default function App() {
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 0.5vw;
   align-items: start;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -62,8 +74,20 @@ const Layout = styled.div`
   }
   @media (max-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    .subgrid small {
-      display: none;
+    .subgrid {
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 0.5vw;
+      svg {
+        height: auto;
+        &:last-child {
+          display: none;
+        }
+      }
+      small {
+        display: none;
+      }
     }
   }
 `
