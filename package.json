@@ -1,8 +1,11 @@
 {
-  "name": "@mikkmartin/kogu-widgets",
+  "name": "@mikkmartin/ml-cards",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
+  "repository": {
+    "url": "git://github.com/mikkmartin/ml-cards.git"
+  },
   "main": "src/index.js",
   "dependencies": {
     "d3": "5.15.0",
