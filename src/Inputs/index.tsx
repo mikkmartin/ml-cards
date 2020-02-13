@@ -34,9 +34,9 @@ export default function({ onRun, initialItems }) {
     const max = name === 'maxSize' ? 1000 : 5
     switch (type) {
       case 'float':
-        return <Slider max={1} step={0.01} {...rest} />
+        return <Slider min={0.01} max={1} step={0.01} {...rest} />
       case 'int':
-        return <Slider max={max} {...rest} />
+        return <Slider min={1} max={max} {...rest} />
       case 'bool':
         return <CheckBox {...rest} />
     }
@@ -88,6 +88,9 @@ const Container = styled.svg`
     }
   }
   .button {
+    text {
+      user-select: none;
+    }
     rect {
       fill: #ffcb00;
     }

@@ -1,11 +1,10 @@
-import React, { useRef, useEffect, useContext } from 'react'
+import React, { useEffect, useContext, forwardRef } from 'react'
 import { transform } from 'framer-motion'
 import { Context } from './index'
 
 let interval = null
-export default function() {
+export default forwardRef((props, ref: any) => {
   const { pos, isPlaying, setIsPlaying, temporarylyPaused } = useContext(Context)
-  const ref = useRef(null)
   const posToTime = val => transform(val, [0, 1], [0, ref.current.duration])
 
   useEffect(() => {
@@ -53,4 +52,4 @@ export default function() {
       <source src="ml-recording.mov" type="video/mp4" />
     </video>
   )
-}
+})

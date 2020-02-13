@@ -43,6 +43,7 @@ export default function({
     setTotalDragMovement(0)
     setStartPos(ev.clientX || ev.touches[0].clientX)
     onTapStart(ev, info)
+    setLastValue(value)
   }
 
   function handleOnDrag(ev, info) {
@@ -170,6 +171,7 @@ const StyledInput = styled.input<any>`
   border: none;
   -webkit-appearance: none;
   pointer-events: none;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   &:hover {
     cursor: col-resize;
   }

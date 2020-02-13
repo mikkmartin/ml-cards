@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, createRef } from 'react'
 import ImageSlider from './ImageSlider'
 import Notes from './Notes'
 import List from './List'
@@ -7,6 +7,7 @@ import Inputs from './Inputs'
 import { useMotionValue } from 'framer-motion'
 import styled from 'styled-components'
 import generateData from './common/data'
+import AddCard from './AddCard'
 
 const attrs = {
   noiseStrength: 0.95,
@@ -18,22 +19,29 @@ const attrs = {
 export default function App() {
   const [items, next, selected, setSelected] = useItems(7)
   const progress = useMotionValue(0)
+  const ref = useRef(null)
+
+  const onRun = d => {
+    next(d)
+    ref.current()
+  }
 
   return (
     <Layout>
       <div>
         <small>INPUT: test.py</small>
-        <Inputs initialItems={attrs} onRun={next} />
+        <Inputs initialItems={attrs} onRun={onRun} />
         <List selected={selected} setSelected={setSelected} items={items} />
       </div>
       <div>
         <small>OUTPUT: run_001</small>
-        <ImageSlider progress={progress} />
+        <ImageSlider progress={progress} ref={ref} />
       </div>
-      <div>
+      <div className="subgrid">
         <small>&nbsp;</small>
         <LineChart progress={progress} selected={selected} items={items} />
         <Notes />
+        <AddCard />
       </div>
     </Layout>
   )
@@ -42,11 +50,21 @@ export default function App() {
 const Layout = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 0.5rem;
+  grid-gap: 0.5vw;
   align-items: start;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  > div > svg {
+    display: block;
+    margin-bottom: 0.5vw;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
   @media (max-width: 768px) {
     grid-template-columns: 1fr 1fr;
+    .subgrid small {
+      display: none;
+    }
   }
 `
 

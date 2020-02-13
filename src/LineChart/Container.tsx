@@ -27,7 +27,6 @@ export default function({ label = 'Accuracy', progress = useMotionValue(0), sele
 
 const Svg = styled.svg`
   background: white;
-  margin-bottom: 0.15rem;
   g {
     path {
       fill: none;

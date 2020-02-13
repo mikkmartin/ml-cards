@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function({ selected, setSelected, items }) {
-  const height = items.length * 32 + 16
+  const height = items.length * 32 + 14
   function classNames(selected, id) {
     return [selected === id ? 'selected' : '', id % 2 ? 'odd' : ''].join(' ')
   }
@@ -21,12 +21,12 @@ export default function({ selected, setSelected, items }) {
             className={classNames(selected, id)}
             onMouseEnter={() => setSelected(id)}>
             <rect x="0" width="100%" height="32px" />
-            <text x="8" y="20">
+            <text x="8" y="21">
               <tspan className="name">{name} </tspan>
               <tspan x="120">{noiseStrength} </tspan>
               <tspan x="187">{growthSpeed} </tspan>
               <tspan x="226">{maxSize} </tspan>
-              <tspan x="330" text-anchor="end" className={rmsprop ? 'true' : 'false'}>
+              <tspan x="330" textAnchor="end" className={rmsprop ? 'true' : 'false'}>
                 {rmsprop.toString()}{' '}
               </tspan>
             </text>
@@ -99,12 +99,11 @@ const List = styled.svg`
       font-weight: bold;
     }
     rect {
-      fill: #00000000;
       fill: #3e3e3e10;
     }
     &.odd {
       rect {
-        fill: none;
+        fill: #ffffff00;
       }
       &.selected {
         color: #ffcb00;

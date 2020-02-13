@@ -1,14 +1,23 @@
-import React, { createContext, useState } from 'react'
-import { motion, useMotionValue } from 'framer-motion'
+import React, { createContext, useState, forwardRef, useRef, Ref } from 'react'
+import { motion, useMotionValue, MotionValue } from 'framer-motion'
 import styled from 'styled-components'
 import Video from './Video'
 import Slider from './Slider'
 import PlayControls from './PlayControls'
 
 export const Context = createContext(null)
-export default function({ progress = useMotionValue(0) }) {
+export default forwardRef(({ progress = useMotionValue(0) }: { progress: MotionValue }, item: Ref) => {
   const [isPlaying, setIsPlaying] = useState(true)
   const [temporarylyPaused, setTemporarylyPaused] = useState(false)
+  const ref = useRef(null)
+
+  item.current = () => {
+    setIsPlaying(true)
+    setTemporarylyPaused(false)
+    ref.current.currentTime = 0
+    ref.current.play()
+  }
+
   return (
     <Context.Provider
       value={{
@@ -20,12 +29,12 @@ export default function({ progress = useMotionValue(0) }) {
       }}>
       <Container>
         <PlayControls />
-        <Video />
+        <Video ref={ref} />
         <Slider />
       </Container>
     </Context.Provider>
   )
-}
+})
 
 const Container = styled(motion.div)`
   width: 100%;
@@ -38,5 +47,6 @@ const Container = styled(motion.div)`
   svg {
     width: 100%;
     height: auto;
+    display: block;
   }
 `
