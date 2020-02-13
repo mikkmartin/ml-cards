@@ -6,6 +6,10 @@
   "repository": {
     "url": "git://github.com/mikkmartin/ml-cards.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "module": "src/App.tsx",
   "main": "src/index.js",
   "dependencies": {
     "d3": "5.15.0",
@@ -26,5 +30,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
